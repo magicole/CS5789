@@ -48,7 +48,7 @@ int currentPos0 = SERVOMIN;
 int currentPos1 = SERVOMIN;
 int currentPos2 = SERVOMIN;
 int currentPos3 = SERVOMIN;
-uint16_t speed0 = 2;
+uint16_t speed0 = 10;
 uint16_t speed1 = 4;
 uint16_t speed2 = 6;
 uint16_t speed3 = 8;
@@ -56,13 +56,14 @@ uint16_t speed3 = 8;
 void loop() {
   long proximity = checkProximity(pingPin);
 
-  if (proximity <= 30)
+  if (proximity <= 90)
   {
     // set to stare
     pwm.setPWM(0, 0, stare0);
     pwm.setPWM(1, 0, stare1);
     pwm.setPWM(2, 0, stare2);
     pwm.setPWM(3, 0, stare3);
+    delay(100);
   }
   else {
     if (currentPos0 + speed0 > SERVOMAX || currentPos0 + speed0 < SERVOMIN)
@@ -82,11 +83,7 @@ void loop() {
       speed3 *= -1;
     }
 
-    if (currentPos0 - currentPos1 < 40)
-    {
-      currentPos0 = 0;
-      currentPos1 = 0;
-    }
+    
 
     currentPos0 += speed0;
     currentPos1 += speed1;
